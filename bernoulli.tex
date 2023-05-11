@@ -1,0 +1,83 @@
+%default 2 column article
+%\documentclass[twocolumn]{article}
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{lipsum}
+\usepackage{pgfplots} % to make a plot
+%some error: \usepackage{utf8}
+
+\title{Bernoulli - 01}
+\author{CyC }
+\date{May 2023}
+
+\begin{document}
+	
+	\maketitle
+	\section{Introduction}
+	\subsection{Daniel Bernoulli}
+	Daniel Bernoulli (8 February [O.S. 29 January] 1700 – 27 March 1782[2]) was a Swiss mathematician and physicist[2] and was one of the many prominent mathematicians in the Bernoulli family from Basel. He is particularly remembered for his applications of mathematics to mechanics, especially fluid mechanics, and for his pioneering work in probability and statistics. His name is commemorated in the Bernoulli's principle, a particular example of the conservation of energy, which describes the mathematics of the mechanism underlying the operation of two important technologies of the 20th century: the carburetor and the airplane wing.
+	%\lipsum[1-5] % generate 5 paragrah of lipsum text
+	%\onecolumn %go back to one column.
+	\section{Plot}
+	Here the graph of function $f(x) = x^x$.
+	
+	\begin{tikzpicture} % to make a plot
+		\begin{axis}[xmin=0,xmax=1.5, ymin=0, ymax=1.5, axis lines=left, xlabel=$x$, restrict y to domain=-10:10]
+			
+			%restrict y to domain=-10:10 to avoid computing impossible or too large value
+			
+		%	\addplot[color=red, dashed, mark=*,samples=200]{x^x};
+			\addplot[color=red, samples=500]{x^x};
+%			\break
+		\end{axis}
+	\end{tikzpicture}
+	
+	\section{Integral}
+	
+	
+	
+	$$B = \int_0^1x^xdx = \int_0^1e^{ln(x^x)}dx = \int_0^1e^{x ln(x)}dx  $$
+	Taylor serie:
+	$$ e^x = \sum_{n=0}^{\infty} \frac{x^n}{n!} $$
+	Then:
+	$$B = \int_0^1e^{x ln(x)}dx $$
+	$$ B= \int_0^1\left( \sum_{n=0}^{\infty} \frac{(x ln(x)^n}{n!} \right) dx $$
+	
+	If the series converges absolutely:
+	
+	$$ B= \sum_{n=0}^{\infty} \int_0^1 \frac{(x ln(x))^n}{n!} dx = \sum_{n=0}^{\infty} \frac{1}{n!} \int_0^1\ x^n ln(x)^n dx $$
+	\break
+	Gamma function:
+	$$ \Gamma(n+1) = \int_0^{\infty} x^n e^{-x} dx $$  
+	\break
+	
+	If n $\in $ N:
+	$$\Gamma(1n+1) = n! $$
+	\break
+	Let's set $ u = -ln(x) \Leftrightarrow e^{-u} = x $
+	
+	$$ du = - \frac{1}{dx} \Leftrightarrow dx= -x du $$
+	\break
+	Then,
+	$$ I =\int_0^1 x^n ln(x)^n dx = \int_{\infty}^0 (e^{-u})^n (-u)^n (-x) du $$
+	$$ I = \int_{\infty}^0 (e^{-u})^n (-u)^n (-e^{-u}) du = \int_{0}^{\infty} (e^{-u})^n (-u)^n (e^{-u}) du $$
+	
+	$$ I = \int_{0}^{\infty} (e^{-u})^{n+1} (-u)^n du = (-1)^n  \int_{0}^{\infty} (e^{-u})^{n+1} u^n du $$
+	\break
+	Let's set
+	$$ v= (n+1) u$$
+	$$ dv = (n+1) du$$
+	$$I = (-1)^n \int_{0}^{\infty} (e^{-v}) \left(\frac{v}{n+1}\right)^n \frac{dv}{(n+1)} $$
+	
+	$$I = (-1)^n \int_{0}^{\infty} (e^{-v}) \frac{v^n}{(n+1)^{n+1}} dv = \Gamma(n+1) \frac{(-1)^n}{(n+1)^{n+1}}$$
+	$$I = \frac{n!}{(n+1)^{n+1}}$$
+	
+	Then,
+	\break
+	$$B =\sum_{n=0}^{\infty} \frac{1}{n!} \int_0^1\ x^n ln(x)^n dx $$
+	$$B =\sum_{n=0}^{\infty}  \frac{(-1)^n}{(n+1)^{n+1}}$$
+	
+	$$ B = 1 - \frac{1}{2^2} +\frac{1}{3^3} -\frac{1}{4^4} + ...$$
+	\break
+	$$B \approx 0.783430 $$
+\end{document}
